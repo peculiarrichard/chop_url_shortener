@@ -4,9 +4,9 @@ import { auth } from "@/firebase/config";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { User, signOut } from "firebase/auth";
-import AuthContext from "@/context/AuthContext";
 import { BsChevronDown } from "react-icons/bs";
 import profilephoto from '../assests/profilephoto.png'
+import Link from "next/link";
 
 const Headerbar: React.FC = () => {
   const user: User | null = auth.currentUser;
@@ -29,7 +29,7 @@ const Headerbar: React.FC = () => {
     <>
     <section className="top-0 z-50 sticky bg-white shadow-lg">
       <div className="flex justify-between items-center relative h-20 w-[95%] mx-auto text-[0.8rem]">
-        <p className="text-[#005AE2] font-bold text-xl italic tracking-widest">Chop</p>
+        <Link href='/' className="text-[#005AE2] font-bold text-xl italic tracking-widest">Chop</Link>
         <h1 className="font-bold text-xl">Welcome, {user?.displayName}</h1>
         <div className="flex space-x-6">
         <button className="p-2 w-40 rounded-lg bg-[#005AE2] text-white font-bold ">Upgrade</button>

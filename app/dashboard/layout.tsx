@@ -5,12 +5,12 @@ import { ReactNode, Suspense } from 'react';
 import ShortLinks from "./shortlinks/page";
 import Dashboard from "./page";
 import CustomShortLinks from "./customshortlinks/page";
-import QRCode from "./qrcodes/page";
 import CustomDomain from "./customdomain/page";
 import Settings from "./settings/page";
 import Headerbar from "@/components/Headerbar";
 import QRCodes from "./qrcodes/page";
 import Loading from "./loading";
+import Feedback from "./feedback/page";
 
 
 interface LayoutProps {
@@ -34,6 +34,7 @@ interface LayoutProps {
         {pathname === '/dashboard/qrcodes' && <QRCodes />}
         {pathname === '/dashboard/customdomain' && <CustomDomain />}
         {pathname === '/dashboard/settings' && <Settings />}
+        {pathname === '/dashboard/feedback' && <Feedback />}
       </div>
     </div>
     </Suspense>

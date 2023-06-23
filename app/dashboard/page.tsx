@@ -5,6 +5,7 @@ import Image from "next/image";
 import { AuthContext } from "@/context/AuthContext";
 import { User } from "firebase/auth";
 import { auth } from "@/firebase/config.js";
+import dashboard from '@/assests/dashboard.png'
 const Dashboard = () => {
   const appUser = useContext(AuthContext);
   let user:User | null = auth.currentUser;
@@ -28,9 +29,11 @@ const Dashboard = () => {
   }
   return (
     <>
-    <section className = "w-[100%] bg-[#edf2f7] ml-[15rem]">
-      <div>
-        <h1>Hi, {user?.displayName}</h1>
+    <section className = "w-full ml-[15rem] box-border p-4 text-[#2e4457] mx-auto">
+      <div className="flex flex-col">
+        <h1 className="text-center text-xl ">Hi, {user?.displayName}</h1>
+        <p className="text-center mt-6">Welcome to your dashboard!</p>
+        <Image src={dashboard} alt="dashboard"></Image>
       </div>
     </section>
     </>

@@ -1,9 +1,7 @@
 "use client";
 
 import React, { useContext, useEffect } from "react";
-import { db, storage, auth } from "@/firebase/config.js";
-import { getAnalytics, logEvent } from "firebase/analytics";
-import { doc, collection, setDoc, getDoc, Timestamp } from "firebase/firestore";
+import { storage, auth } from "@/firebase/config.js";
 import QRCode from "qrcode";
 import {
   ref,
@@ -12,17 +10,16 @@ import {
   listAll,
 } from "firebase/storage";
 import { useState } from "react";
-import { nanoid } from "nanoid";
 import Image from "next/image";
 import Link from "next/link";
 import { AuthContext } from "@/context/AuthContext";
 import { User } from "firebase/auth";
-import { metadata } from "@/app/layout";
+import useDownloader from 'react-use-downloader';
 import Loading from "../loading";
 
 const QRCodes = () => {
-  const urlCollection = collection(db, "shortUrls");
   const appUser = useContext(AuthContext);
+  const {download} = useDownloader();
   let user: User | null = auth.currentUser;
   const listRef = ref(storage, `${user?.uid}/`);
   
@@ -32,6 +29,13 @@ const QRCodes = () => {
     data: string,
     title: string
   ): Promise<string> => {
+
+    if(!data){
+      throw new Error('Invalid link or no link found')
+    }
+    if(!title){
+      throw new Error('Code Title is required')
+    }
     try {
       // Generate QR code as a data URL
       const qrCodeDataUrl = await QRCode.toDataURL(data);
@@ -54,40 +58,19 @@ const QRCodes = () => {
     
   };
 
-  const shortenUrl = async (longUrl: string): Promise<string> => {
-    let slug = nanoid(4);
-
-    try {
-      const docRef = doc(urlCollection, slug);
-      const existingUrls = await getDoc(docRef);
-
-      if (existingUrls.exists()) {
-        throw new Error(`slug ${slug} already exists`);
-      }
-      await setDoc(docRef, {
-        longUrl,
-        shortUrl: `chop.ly/${slug}`,
-        createdAt: Timestamp.now(),
-        id: slug,
-        user: user?.uid,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-    return slug;
-  };
-
   const [link, setLink] = useState("");
   const [title, setTitle] = useState("");
   const [qrCodeImage, setQrCodeImage] = useState<string | null>(null);
   const [downloadLink, setDownloadLink] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [files, setFiles] = useState<File[]>([]);
 
   interface File {
     name: string;
     downloadUrl: string;
   }
-  const handleGenerateQRCode = async () => {
+  const handleGenerateQRCode = async (event: React.FormEvent) => {
+    event.preventDefault();
     setLoading(true);
     try {
       const downloadURL: string = await generateQrCode(link, title);
@@ -96,12 +79,15 @@ const QRCodes = () => {
       setTitle(title);
       setLoading(false);
     } catch (error) {
+      setLoading(false)
       console.error("Error generating QR code:", error);
       throw error;
     }
+    setLink('');
+    setTitle('');
   };
 
-  const [files, setFiles] = useState<File[]>([]);
+  //fetch qrcodes
   useEffect(() => {
     const fetchUserFiles = async () => {
       try {
@@ -126,32 +112,81 @@ const QRCodes = () => {
     }
   }, [listRef]);
 
+if (!appUser) {
+    return (
+      <p className="w-4/5 m-auto text-base text-center mt-20">
+        You are not authorized to view this page. Please{" "}
+      </p>
+    );
+  }
   return (
     <>
-    <section className = "w-[100%] bg-[#edf2f7] ml-[15rem]">
-      <div>
-        <input
-          type="text"
-          value={link}
-          placeholder="Enter a link"
-          onChange={(event) => setLink(event.target.value)}
-        />
-        <input
-          type="text"
-          value={title}
-          placeholder="Name this QR code"
-          onChange={(event) => setTitle(event.target.value)}
-        />
-        <button onClick={handleGenerateQRCode}>Generate QR Code
-        {loading? <Loading /> : null}
-        </button>
+    <section className="w-full ml-[15rem] box-border p-4 text-[#2e4457]">
+        <div className="flex justify-between border-b py-4">
+          <div className="flex gap-4 justify-center items-center">
+            <h1 className="text-xl font-extrabold ">QR codes:</h1>
+            <p className="font-semibold">
+              Create and download QR codes for your links
+            </p>
+          </div>
+          <Link href='/dashboard/feedback' className="flex gap-2 items-center p-2 border-2 rounded-lg text-[0.8rem] font-semibold hover:bg-[#2e4457] hover:text-white hover:border-none">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              className="bi bi-chat-left-fill"
+              viewBox="0 0 16 16">
+              <path d="M2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+            </svg>
+            <p>Leave Feedback</p>
+          </Link>
+        </div>
+        <h2 className="mt-6 font-bold">Generate QR code</h2>
+        <form
+          onSubmit={handleGenerateQRCode}
+          className="flex flex-col items-center border-2 rounded-lg h-full p-3 mt-3">
+          <label htmlFor="qrtitle" className="w-[50%]">
+            Name this QR code: <br></br>
+            <input
+              type="text"
+              placeholder="Title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              required
+              className="w-full text-center p-4 border border-[#2e4457] rounded"
+            />
+          </label>
+          <label htmlFor="link" className="w-[50%]">
+            <input
+              type="url"
+              placeholder="Paste in the long url here..."
+              value={link}
+              onChange={(e) => setLink(e.target.value)}
+              required
+              className="w-full text-center p-4 border border-[#2e4457] rounded mt-4"
+            />
+          </label>
+          <button
+            disabled={loading}
+            className="p-3 bg-[#005AE2] rounded-lg mt-2 text-white flex">
+            Generate
+            {loading ? <Loading /> : null}
+          </button>
+          <p className="mt-2 text-[0.7rem]">
+            By clicking Generate, I agree with the terms of service, privacy
+            policy, and use of cookies.
+          </p>
+        </form>
+
+
         {qrCodeImage && (
           <>
             <Image
               src={qrCodeImage}
               alt="qrCode"
-              width={200}
-              height={200}></Image>
+              width={150}
+              height={150}></Image>
             <p>{title}</p>
           </>
         )}
@@ -160,24 +195,31 @@ const QRCodes = () => {
             Download QR Code
           </a>
         )}
-      </div>
-      <div>
-        <h1>Your Files</h1>
+
+
+      <div className="mt-6">
+        <h1 className="text-lg font-bold">Your Files</h1>
         {files.length === 0 ? (
-          <p>No files found.</p>
+          <p>You are yet to generate any QR Codes</p>
         ) : (
-          <ul>
+          <ul className="">
             {files.map((file) => (
-              <li key={file.name}>
-                <p>File Name: {file.name}</p>
-                <Link href={file.downloadUrl}>
-                  Download Link
-                </Link>
+              <li key={file.name} className="justify-between items-center mt-3 flex border-2 shadow-lg p-3 rounded">
+                <div className="flex flex-col space-y-2 items-start">
+                  <p className="text-xl font-bold text-center">{file.name}</p>
                 <Image
                   src={file.downloadUrl}
                   alt="qrcode"
-                  width={200}
-                  height={200}></Image>
+                  width={150}
+                  height={150}></Image>
+                
+                </div>
+                <div className="flex gap-4">
+                <Link href={file.downloadUrl} target="_blank" download className="p-2 bg-slate-200 rounded-lg font-semibold hover:bg-[#2e4457] hover:text-white">
+                  View
+                </Link>
+                <button onClick={()=>download(file.downloadUrl, `${file.name}.png`)} className="border p-2 rounded hover:bg-slate-100">Download</button>
+                </div>
               </li>
             ))}
           </ul>
