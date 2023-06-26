@@ -135,7 +135,7 @@ const ShortLinks = () => {
 
   return (
     <>
-      <section className="w-full lg:ml-[15rem] box-border p-4 text-[#2e4457]">
+      <section className="w-full lg:w-[85%] lg:ml-[15rem] box-border p-4 text-[#2e4457]">
         <div className="flex flex-col lg:flex-row justify-between border-b py-4">
           <div className="flex flex-col lg:flex-row gap-4 justify-center lg:items-center">
             <h1 className="text-xl font-extrabold ">Short Links:</h1>

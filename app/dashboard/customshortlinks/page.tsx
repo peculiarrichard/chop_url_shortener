@@ -126,9 +126,9 @@ const CustomShortLinks = () => {
 
   return (
     <>
-      <section className="w-full lg:ml-[15rem] box-border p-4 text-[#2e4457]">
+      <section className="w-full lg:w-[75%] lg:ml-[15rem] box-border p-4 text-[#2e4457]">
         <div className="flex flex-col lg:flex-row justify-between border-b py-4">
-          <div className="flex flex-col lg:flex-row gap-4 justify-center lg:items-center">
+          <div className="flex flex-col gap-4 justify-center xl:items-center">
             <h1 className="text-xl font-extrabold "> Custom Short Links:</h1>
             <p className="font-semibold">
               Customize your links with custom backhalves
@@ -152,9 +152,9 @@ const CustomShortLinks = () => {
         <h2 className="mt-6 font-bold">Shorten Url</h2>
         <form
           onSubmit={handleCustomShorten}
-          className="flex flex-col items-center justify-center border-2 rounded-lg h-full p-3 mt-3">
-          <div className="flex flex-col lg:flex-row gap-4 w-full">
-            <label htmlFor="title" className="w-full lg:w-[50%] ">
+          className="flex flex-col justify-center border-2 rounded-lg h-full p-3 mt-3">
+          <div className="flex flex-col lg:flex-row gap-4">
+            <label htmlFor="title" className="w-full lg:w-[50%]">
               Name this link: <br></br>
               <input
                 type="text"
@@ -178,7 +178,7 @@ const CustomShortLinks = () => {
             </label>
           </div>
           <label htmlFor="url" className="w-full lg:w-[50%] mt-4 lg:mt-0">
-            Enter long link: <br></br>
+    
             <input
               type="url"
               placeholder="Paste in the long url here..."
@@ -190,7 +190,7 @@ const CustomShortLinks = () => {
           </label>
           <button
             disabled={loading}
-            className="p-3 bg-[#005AE2] rounded-lg mt-2 text-white flex">
+            className="p-3 bg-[#005AE2] rounded-lg mt-2 text-white">
             Chop URL
             {loading ? <Loading /> : null}
           </button>
@@ -217,7 +217,7 @@ const CustomShortLinks = () => {
                   className="justify-between mt-3 flex border-2 shadow-lg p-3 rounded flex-col lg:flex-row">
                   <div className="flex flex-col space-y-2">
                     <h1 className="text-xl font-bold">{link.name}</h1>
-                    <p className="overflow-x-hidden font-bold">
+                    <p className="truncate font-bold">
                       Long Url: {link.longUrl}{" "}
                     </p>
                     <p className="font-bold">Short URL: {link.shortUrl}</p>

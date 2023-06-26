@@ -12,7 +12,7 @@ const appUser = useContext(AuthContext);
     );
   }
   return (
-    <div>CustomDomain</div>
+    <div className='w-full  lg:w-[85%] lg:ml-[15rem] box-border p-4 text-xl text-[#2e4457]'>This feature is coming soon. Anticipate!</div>
   )
 }
 

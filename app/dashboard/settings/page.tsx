@@ -18,7 +18,7 @@ const Settings = () => {
   
   return (
     <>
-    <section className="w-full ml-[15rem] box-border p-4 text-[#2e4457] flex flex-col space-y-4 h-full">
+    <section className="w-full lg:w-[85%] ml-[15rem] box-border p-4 text-[#2e4457] flex flex-col space-y-4 h-full">
       <h1 className="text-xl font-extrabold "> Profile</h1>
       <h1 className="text-base font-semibold "> Display Name</h1>
       <p className='text-sm p-2 border rounded'>{user?.displayName}</p>
