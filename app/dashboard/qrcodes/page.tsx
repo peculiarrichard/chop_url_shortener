@@ -121,15 +121,15 @@ if (!appUser) {
   }
   return (
     <>
-    <section className="w-full ml-[15rem] box-border p-4 text-[#2e4457]">
-        <div className="flex justify-between border-b py-4">
-          <div className="flex gap-4 justify-center items-center">
+    <section className="w-full lg:ml-[15rem] box-border p-4 text-[#2e4457]">
+        <div className="flex flex-col lg:flex-row justify-between border-b py-4">
+          <div className="flex flex-col lg:flex-row lg:gap-4 justify-center lg:items-center">
             <h1 className="text-xl font-extrabold ">QR codes:</h1>
             <p className="font-semibold">
               Create and download QR codes for your links
             </p>
           </div>
-          <Link href='/dashboard/feedback' className="flex gap-2 items-center p-2 border-2 rounded-lg text-[0.8rem] font-semibold hover:bg-[#2e4457] hover:text-white hover:border-none">
+          <Link href='/dashboard/feedback' className="flex gap-2 items-center p-2 border-2 rounded-lg text-[0.8rem] font-semibold hover:bg-[#2e4457] hover:text-white hover:border-none mt-4 lg:mt-0">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -146,7 +146,7 @@ if (!appUser) {
         <form
           onSubmit={handleGenerateQRCode}
           className="flex flex-col items-center border-2 rounded-lg h-full p-3 mt-3">
-          <label htmlFor="qrtitle" className="w-[50%]">
+          <label htmlFor="qrtitle" className=" w-full lg:w-[50%]">
             Name this QR code: <br></br>
             <input
               type="text"
@@ -157,7 +157,7 @@ if (!appUser) {
               className="w-full text-center p-4 border border-[#2e4457] rounded"
             />
           </label>
-          <label htmlFor="link" className="w-[50%]">
+          <label htmlFor="link" className="w-full lg:w-[50%]">
             <input
               type="url"
               placeholder="Paste in the long url here..."
@@ -170,11 +170,11 @@ if (!appUser) {
           <button
             disabled={loading}
             className="p-3 bg-[#005AE2] rounded-lg mt-2 text-white flex">
-            Generate
+            Create
             {loading ? <Loading /> : null}
           </button>
           <p className="mt-2 text-[0.7rem]">
-            By clicking Generate, I agree with the terms of service, privacy
+            By clicking Create, I agree with the terms of service, privacy
             policy, and use of cookies.
           </p>
         </form>
@@ -200,12 +200,12 @@ if (!appUser) {
       <div className="mt-6">
         <h1 className="text-lg font-bold">Your Files</h1>
         {files.length === 0 ? (
-          <p>You are yet to generate any QR Codes</p>
+          <p>You are yet to create any QR Codes</p>
         ) : (
           <ul className="">
             {files.map((file) => (
-              <li key={file.name} className="justify-between items-center mt-3 flex border-2 shadow-lg p-3 rounded">
-                <div className="flex flex-col space-y-2 items-start">
+              <li key={file.name} className="justify-between items-center mt-3 flex flex-col lg:flex-row border-2 shadow-lg p-3 rounded">
+                <div className="flex flex-col space-y-2 lg:items-start">
                   <p className="text-xl font-bold text-center">{file.name}</p>
                 <Image
                   src={file.downloadUrl}

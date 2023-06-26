@@ -135,15 +135,15 @@ const ShortLinks = () => {
 
   return (
     <>
-      <section className="w-full ml-[15rem] box-border p-4 text-[#2e4457]">
-        <div className="flex justify-between border-b py-4">
-          <div className="flex gap-4 justify-center items-center">
+      <section className="w-full lg:ml-[15rem] box-border p-4 text-[#2e4457]">
+        <div className="flex flex-col lg:flex-row justify-between border-b py-4">
+          <div className="flex flex-col lg:flex-row gap-4 justify-center lg:items-center">
             <h1 className="text-xl font-extrabold ">Short Links:</h1>
             <p className="font-semibold">
               Create short links with auto backhalves
             </p>
           </div>
-          <Link href='/dashboard/feedback' className="flex gap-2 items-center p-2 border-2 rounded-lg text-[0.8rem] font-semibold hover:bg-[#2e4457] hover:text-white hover:border-none">
+          <Link href='/dashboard/feedback' className="flex gap-2 items-center p-2 border-2 rounded-lg text-[0.8rem] font-semibold hover:bg-[#2e4457] hover:text-white hover:border-none mt-4 lg:mt-0">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -160,7 +160,7 @@ const ShortLinks = () => {
         <form
           onSubmit={handleShorten}
           className="flex flex-col items-center border-2 rounded-lg h-full p-3 mt-3">
-          <label htmlFor="urlname" className="w-[50%]">
+          <label htmlFor="urlname" className="w-full lg:w-[50%]">
             Name this link: <br></br>
             <input
               type="text"
@@ -171,7 +171,7 @@ const ShortLinks = () => {
               className="w-full text-center p-4 border border-[#2e4457] rounded"
             />
           </label>
-          <label htmlFor="originalurl" className="w-[50%]">
+          <label htmlFor="originalurl" className="w-full lg:w-[50%]">
             <input
               type="url"
               placeholder="Paste in the long url here..."
@@ -207,7 +207,7 @@ const ShortLinks = () => {
               {links.map((link: any) => (
                 <li
                   key={link.shortUrl}
-                  className="justify-between mt-3 flex border-2 shadow-lg p-3 rounded">
+                  className="justify-between mt-3 flex flex-col lg:flex-row border-2 shadow-lg p-3 rounded">
                   <div className="flex flex-col space-y-2">
                     <h1 className="text-xl font-bold">{link.name}</h1>
                     <p className="overflow-x-hidden font-bold">
@@ -219,7 +219,7 @@ const ShortLinks = () => {
                     </p>
                     {/* <p>Click Count: {getClickCount(link.shortUrl)}</p> */}
                   </div>
-                  <button onClick={() => copyToClipBoard(link.shortUrl)} className="rounded p-2 self-start border ">Copy
+                  <button onClick={() => copyToClipBoard(link.shortUrl)} className="rounded p-2 lg:self-start border ">Copy
                   </button>
                 </li>
               ))}

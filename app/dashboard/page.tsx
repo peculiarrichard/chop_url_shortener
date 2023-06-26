@@ -29,7 +29,7 @@ const Dashboard = () => {
   }
   return (
     <>
-    <section className = "w-full ml-[15rem] box-border p-4 text-[#2e4457] mx-auto">
+    <section className = "w-full lg:ml-[15rem] box-border p-4 text-[#2e4457] mx-auto">
       <div className="flex flex-col">
         <h1 className="text-center text-xl ">Hi, {user?.displayName}</h1>
         <p className="text-center mt-6">Welcome to your dashboard!</p>

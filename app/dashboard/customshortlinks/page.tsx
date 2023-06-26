@@ -126,9 +126,9 @@ const CustomShortLinks = () => {
 
   return (
     <>
-      <section className="w-full ml-[15rem] box-border p-4 text-[#2e4457]">
-        <div className="flex justify-between border-b py-4">
-          <div className="flex gap-4 justify-center items-center">
+      <section className="w-full lg:ml-[15rem] box-border p-4 text-[#2e4457]">
+        <div className="flex flex-col lg:flex-row justify-between border-b py-4">
+          <div className="flex flex-col lg:flex-row gap-4 justify-center lg:items-center">
             <h1 className="text-xl font-extrabold "> Custom Short Links:</h1>
             <p className="font-semibold">
               Customize your links with custom backhalves
@@ -136,7 +136,7 @@ const CustomShortLinks = () => {
           </div>
           <Link
             href="/dashboard/feedback"
-            className="flex gap-2 items-center p-2 border-2 rounded-lg text-[0.8rem] font-semibold hover:bg-[#2e4457] hover:text-white hover:border-none">
+            className="flex gap-2 items-center p-2 border-2 rounded-lg text-[0.8rem] font-semibold hover:bg-[#2e4457] hover:text-white hover:border-none mt-4 lg:mt-0">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -153,8 +153,8 @@ const CustomShortLinks = () => {
         <form
           onSubmit={handleCustomShorten}
           className="flex flex-col items-center justify-center border-2 rounded-lg h-full p-3 mt-3">
-          <div className="flex gap-4">
-            <label htmlFor="title" className="w-[50%] ">
+          <div className="flex flex-col lg:flex-row gap-4 w-full">
+            <label htmlFor="title" className="w-full lg:w-[50%] ">
               Name this link: <br></br>
               <input
                 type="text"
@@ -165,7 +165,7 @@ const CustomShortLinks = () => {
                 className="w-full text-center p-4 border border-[#2e4457] rounded"
               />
             </label>
-            <label htmlFor="backhalf" className="w-[50%] ">
+            <label htmlFor="backhalf" className="w-full lg:w-[50%] ">
               Backhalf: <br></br>
               <input
                 type="text"
@@ -177,14 +177,15 @@ const CustomShortLinks = () => {
               />
             </label>
           </div>
-          <label htmlFor="url" className="w-[50%] ">
+          <label htmlFor="url" className="w-full lg:w-[50%] mt-4 lg:mt-0">
+            Enter long link: <br></br>
             <input
               type="url"
               placeholder="Paste in the long url here..."
               value={url}
               onChange={(e) => setUrl(e.target.value)}
               required
-              className="w-full text-center p-4 border border-[#2e4457] rounded mt-4"
+              className="w-full text-center p-4 border border-[#2e4457] rounded lg:mt-4"
             />
           </label>
           <button
@@ -213,7 +214,7 @@ const CustomShortLinks = () => {
               {links.map((link: any) => (
                 <li
                   key={link.shortUrl}
-                  className="justify-between mt-3 flex border-2 shadow-lg p-3 rounded">
+                  className="justify-between mt-3 flex border-2 shadow-lg p-3 rounded flex-col lg:flex-row">
                   <div className="flex flex-col space-y-2">
                     <h1 className="text-xl font-bold">{link.name}</h1>
                     <p className="overflow-x-hidden font-bold">
@@ -227,7 +228,7 @@ const CustomShortLinks = () => {
                   </div>
                   <button
                     onClick={() => copyToClipBoard(link.shortUrl)}
-                    className="rounded p-2 self-start border ">
+                    className="rounded p-2 lg:self-start border ">
                     Copy
                   </button>
                 </li>

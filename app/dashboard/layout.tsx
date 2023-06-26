@@ -1,13 +1,14 @@
 'use client';
 import { usePathname } from "next/navigation";
-import Sidebar from '../../components/Sidebar';
+import {ReactEventHandler, useState} from 'react'
+import Sidebar from './components/Sidebar';
 import { ReactNode, Suspense } from 'react';
 import ShortLinks from "./shortlinks/page";
 import Dashboard from "./page";
 import CustomShortLinks from "./customshortlinks/page";
 import CustomDomain from "./customdomain/page";
 import Settings from "./settings/page";
-import Headerbar from "@/components/Headerbar";
+import Headerbar from "@/app/dashboard/components/Headerbar";
 import QRCodes from "./qrcodes/page";
 import Loading from "./loading";
 import Feedback from "./feedback/page";
@@ -20,12 +21,22 @@ interface LayoutProps {
  const Layout: React.FC<LayoutProps> = ({ children }) => {
   const  pathname  = usePathname();
 
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
+
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
+  const closeSidebar = () => {
+    setIsSidebarOpen(false);
+  };
+
   return (
     <>
-    <Suspense fallback={<p>We are creating magic for you. It will just take a while</p>}>
-    <Headerbar></Headerbar>
+    <Headerbar toggleSidebar={toggleSidebar}></Headerbar>
     <div className="flex w-[95%] mx-auto justify-between items-start pt-4">
-      <Sidebar />
+      <Sidebar isOpen={isSidebarOpen} closeSidebar={closeSidebar}/>
       <div>
         {/* // Render the appropriate component based on the current route */}
         {pathname === '/dashboard' && <Dashboard /> }
@@ -37,7 +48,6 @@ interface LayoutProps {
         {pathname === '/dashboard/feedback' && <Feedback />}
       </div>
     </div>
-    </Suspense>
     </>
   );
 };
