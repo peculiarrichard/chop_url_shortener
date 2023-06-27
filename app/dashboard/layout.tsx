@@ -34,9 +34,9 @@ interface LayoutProps {
 
   return (
     <>
-    <Headerbar toggleSidebar={toggleSidebar}></Headerbar>
+    <Headerbar toggleSidebar={toggleSidebar} isOpen={isSidebarOpen}></Headerbar>
     <div className="flex w-[95%] mx-auto justify-between items-start pt-4">
-      <Sidebar isOpen={isSidebarOpen} closeSidebar={closeSidebar}/>
+      <Sidebar isOpen={isSidebarOpen} closeSidebar={closeSidebar}></Sidebar>
       <div>
         {/* // Render the appropriate component based on the current route */}
         {pathname === '/dashboard' && <Dashboard /> }

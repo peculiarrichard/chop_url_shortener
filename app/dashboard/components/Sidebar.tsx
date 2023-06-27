@@ -12,22 +12,22 @@ const Sidebar: React.FC<{ isOpen: boolean; closeSidebar: () => void }> = ({ isOp
   }
   return (
     <>
-    <section className={` flex-col w-full md:w-[50%] lg:w-[15rem] h-full fixed z-10 overflow-x-hidden bg-white border-r-2 ${isOpen? 'flex': 'hidden'}`}>
+    <aside className={`lg:flex flex-col w-full md:w-[50%] lg:w-[15rem] h-full fixed z-10 overflow-x-hidden bg-white border-r-2 ${isOpen? 'flex': 'hidden'}`}>
       <div className='flex relative'>
         <button className='p-3 bg-[#005AE2] w-4/5 rounded-lg text-white font-bold' onClick={handleClick}>Create New
         </button>
         {active? (
           <div className='ml-20 mt-10 flex flex-col absolute text-sm bg-white shadow-lg rounded-2xl w-52 justify-center p-2 text-[#005AE2]'>
-            <Link href="/dashboard/shortlinks" className='p-2 font-bold'> Short Link</Link>
-            <Link href="/dashboard/customshortlinks" className='p-2 font-bold'>Custom link</Link>
-            <Link href="/dashboard/qrcodes" className='p-2 font-bold'>QR Code</Link>
+            <Link href="/dashboard/shortlinks" className='p-2 font-bold' onClick={closeSidebar}> Short Link</Link>
+            <Link href="/dashboard/customshortlinks" className='p-2 font-bold' onClick={closeSidebar}>Custom link</Link>
+            <Link href="/dashboard/qrcodes" className='p-2 font-bold' onClick={closeSidebar}>QR Code</Link>
           </div>
         ): null}
       </div>
     <div className='flex flex-col mt-6  border-y-2 py-5'>
       <ul className='space-y-10 font-bold text-sm text-[#2E4457]'>
         <li className={pathName === '/dashboard'? 'text-[#005AE2]': ''}>
-          <Link href="/dashboard" className= 'flex gap-3 items-center' > 
+          <Link href="/dashboard" className= 'flex gap-3 items-center' onClick={closeSidebar} > 
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#005AE2" d="M13 9V3h8v6h-8ZM3 13V3h8v10H3Zm10 8V11h8v10h-8ZM3 21v-6h8v6H3Z"/></svg>
             Dashboard
           </Link>
@@ -64,7 +64,7 @@ const Sidebar: React.FC<{ isOpen: boolean; closeSidebar: () => void }> = ({ isOp
         </li>
       </ul>
     </div>
-    </section>
+    </aside>
     </>
   );
 };

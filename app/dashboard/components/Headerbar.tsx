@@ -8,9 +8,9 @@ import { BsChevronDown } from "react-icons/bs";
 import profilephoto from "@/assests/profilephoto.png";
 import Link from "next/link";
 
-const Headerbar: React.FC<{ toggleSidebar: () => void }> = ({
+const Headerbar: React.FC<{ toggleSidebar: () => void; isOpen: boolean;}> = ({
   toggleSidebar,
-  // isOpen,
+  isOpen,
 }) => {
   const user: User | null = auth.currentUser;
   const router = useRouter();
@@ -34,7 +34,7 @@ const Headerbar: React.FC<{ toggleSidebar: () => void }> = ({
       <nav className="top-0 z-50 sticky bg-white shadow-lg w-full border-2">
         <div className="flex justify-between items-center relative h-20 w-[95%] mx-auto text-[0.8rem]">
           <button className="lg:hidden" onClick={toggleSidebar}>
-            {/* {isOpen ? ( */}
+            {isOpen ? (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="30"
@@ -44,7 +44,7 @@ const Headerbar: React.FC<{ toggleSidebar: () => void }> = ({
                 viewBox="0 0 16 16">
                 <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
               </svg>
-            {/* ) : (
+             ) : (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="30"
@@ -57,7 +57,7 @@ const Headerbar: React.FC<{ toggleSidebar: () => void }> = ({
                   d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"
                 />
               </svg>
-            )} */}
+            )} 
           </button>
           <Link
             href="/"
@@ -68,7 +68,7 @@ const Headerbar: React.FC<{ toggleSidebar: () => void }> = ({
             Welcome, {user?.displayName}
           </h1>
           <div className="flex lg:space-x-6">
-            <button className=" hidden lg:flex p-2 w-40 rounded-lg text-center bg-[#005AE2] text-white font-bold ">
+            <button className=" hidden lg:block p-2 w-32 rounded-lg text-center bg-[#005AE2] text-white font-bold ">
               Upgrade
             </button>
             <button onClick={dropDown} className="">

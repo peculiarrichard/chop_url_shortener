@@ -128,7 +128,7 @@ const CustomShortLinks = () => {
     <>
       <section className="w-full lg:w-[75%] lg:ml-[15rem] box-border p-4 text-[#2e4457]">
         <div className="flex flex-col lg:flex-row justify-between border-b py-4">
-          <div className="flex flex-col gap-4 justify-center xl:items-center">
+          <div className="flex flex-col gap-4 lg:flex-row justify-center xl:items-center">
             <h1 className="text-xl font-extrabold "> Custom Short Links:</h1>
             <p className="font-semibold">
               Customize your links with custom backhalves
@@ -152,7 +152,7 @@ const CustomShortLinks = () => {
         <h2 className="mt-6 font-bold">Shorten Url</h2>
         <form
           onSubmit={handleCustomShorten}
-          className="flex flex-col justify-center border-2 rounded-lg h-full p-3 mt-3">
+          className="flex flex-col justify-center lg:items-center border-2 rounded-lg h-full p-3 mt-3">
           <div className="flex flex-col lg:flex-row gap-4">
             <label htmlFor="title" className="w-full lg:w-[50%]">
               Name this link: <br></br>
@@ -217,7 +217,7 @@ const CustomShortLinks = () => {
                   className="justify-between mt-3 flex border-2 shadow-lg p-3 rounded flex-col lg:flex-row">
                   <div className="flex flex-col space-y-2">
                     <h1 className="text-xl font-bold">{link.name}</h1>
-                    <p className="truncate font-bold">
+                    <p className="font-bold">
                       Long Url: {link.longUrl}{" "}
                     </p>
                     <p className="font-bold">Short URL: {link.shortUrl}</p>
