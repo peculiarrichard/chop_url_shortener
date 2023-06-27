@@ -158,8 +158,8 @@ const Register: React.FC = () => {
             {" "}
             Do you already have an account?{" "}
             <span>
-              <Link href="/login" className="text-blue2 font-hairline underline">
-                Login
+              <Link href="/signin" className="text-blue2 font-hairline underline">
+                Sign In
               </Link>
             </span>
           </p>
