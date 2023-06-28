@@ -4,7 +4,7 @@ import React, { useState, useContext } from "react";
 import { addDoc, collection, Timestamp } from "firebase/firestore";
 import { auth, db } from "@/firebase/config";
 import { toast } from "react-toastify";
-import Loading from "../loading";
+import LoadingSpinner from "../LoadingSpinner";
 import { User } from "firebase/auth";
 import { AuthContext } from "@/context/AuthContext";
 
@@ -123,7 +123,7 @@ const Feedback = () => {
             type="submit"
             className="text-center rounded-lg border mb-2  hover:shadow-3xl hover:scale-105 duration-300 p-3 text-white bg-blue-600 ">
             Submit
-            {loading ? <Loading /> : null}
+            {loading ? <LoadingSpinner /> : null}
           </button>
         </form>
         <div className="sm: text-lg">

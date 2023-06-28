@@ -6,8 +6,9 @@ import { doc, collection, setDoc, getDoc, Timestamp } from "firebase/firestore";
 import { useState } from "react";
 import { AuthContext } from "@/context/AuthContext";
 import { User } from "firebase/auth";
-import Loading from "../loading";
+import LoadingSpinner from "../LoadingSpinner";
 import Link from "next/link";
+import { format } from "date-fns";
 
 const CustomShortLinks = () => {
   let user: User | null = auth.currentUser;
@@ -64,11 +65,11 @@ const CustomShortLinks = () => {
     return slug;
   };
 
-  const [url, setUrl] = useState("");
-  const [backHalf, setBackHalf] = useState("");
-  const [shortUrl, setShortUrl] = useState("");
-  const [title, setTitle] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [url, setUrl] = useState<string>("");
+  const [backHalf, setBackHalf] = useState<string>("");
+  const [shortUrl, setShortUrl] = useState<string>("");
+  const [title, setTitle] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleCustomShorten = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -178,7 +179,6 @@ const CustomShortLinks = () => {
             </label>
           </div>
           <label htmlFor="url" className="w-full lg:w-[50%] mt-4 lg:mt-0">
-    
             <input
               type="url"
               placeholder="Paste in the long url here..."
@@ -192,7 +192,7 @@ const CustomShortLinks = () => {
             disabled={loading}
             className="p-3 bg-[#005AE2] rounded-lg mt-2 text-white">
             Chop URL
-            {loading ? <Loading /> : null}
+            {loading ? <LoadingSpinner /> : null}
           </button>
           <p className="mt-2 text-[0.7rem]">
             By clicking Chop URL, I agree with the terms of service, privacy
@@ -217,12 +217,15 @@ const CustomShortLinks = () => {
                   className="justify-between mt-3 flex border-2 shadow-lg p-3 rounded flex-col lg:flex-row">
                   <div className="flex flex-col space-y-2">
                     <h1 className="text-xl font-bold">{link.name}</h1>
-                    <p className="font-bold">
-                      Long Url: {link.longUrl}{" "}
-                    </p>
+                    <p className="font-bold">Long Url: {link.longUrl} </p>
                     <p className="font-bold">Short URL: {link.shortUrl}</p>
                     <p className="text-[0.8rem]">
-                      Created at: {link.createdAt._seconds}{" "}
+                      Created at: {""}
+                      {(() => {
+                        const date = new Date(link.createdAt._seconds * 1000);
+                        console.log(date);
+                        return format(date, "MMMM dd, yyyy");
+                      })()}
                     </p>
                     {/* <p>Click Count: {getClickCount(link.shortUrl)}</p> */}
                   </div>

@@ -6,8 +6,9 @@ import { useState } from "react";
 import { nanoid } from "nanoid";
 import { AuthContext } from "@/context/AuthContext";
 import { User } from "firebase/auth";
-import Loading from "../loading";
+import LoadingSpinner from "../LoadingSpinner";
 import Link from "next/link";
+import { format } from "date-fns";
 const ShortLinks = () => {
   const urlCollection = collection(db, "shortUrls");
   const appUser = useContext(AuthContext);
@@ -77,10 +78,10 @@ const ShortLinks = () => {
     fetchUserLinks();
   }, [links]);
 
-  const [originalUrl, setOriginalUrl] = useState("");
-  const [shortenedUrl, setShortenedUrl] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [urlName, setUrlName] = useState("");
+  const [originalUrl, setOriginalUrl] = useState<string>("");
+  const [shortenedUrl, setShortenedUrl] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [urlName, setUrlName] = useState<string>("");
 
   const handleShorten = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -117,12 +118,12 @@ const ShortLinks = () => {
   //     throw error;
   //   }
   // };
-  const copyToClipBoard = async (text:string) => {
+  const copyToClipBoard = async (text: string) => {
     try {
       await navigator.clipboard.writeText(text);
-      alert('copied')
+      alert("copied");
     } catch (err) {
-      alert('failed to copy!')
+      alert("failed to copy!");
     }
   };
   if (!appUser) {
@@ -143,7 +144,9 @@ const ShortLinks = () => {
               Create short links with auto backhalves
             </p>
           </div>
-          <Link href='/dashboard/feedback' className="flex gap-2 items-center p-2 border-2 rounded-lg text-[0.8rem] font-semibold hover:bg-[#2e4457] hover:text-white hover:border-none mt-4 lg:mt-0">
+          <Link
+            href="/dashboard/feedback"
+            className="flex gap-2 items-center p-2 border-2 rounded-lg text-[0.8rem] font-semibold hover:bg-[#2e4457] hover:text-white hover:border-none mt-4 lg:mt-0">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -185,7 +188,7 @@ const ShortLinks = () => {
             disabled={loading}
             className="p-3 bg-[#005AE2] rounded-lg mt-2 text-white">
             Chop URL
-            {loading ? <Loading /> : null}
+            {loading ? <LoadingSpinner /> : null}
           </button>
           <p className="mt-2 text-[0.7rem]">
             By clicking Chop URL, I agree with the terms of service, privacy
@@ -215,11 +218,19 @@ const ShortLinks = () => {
                     </p>
                     <p className="font-bold">Short URL: {link.shortUrl}</p>
                     <p className="text-[0.8rem]">
-                      Created at: {link.createdAt._seconds}{" "}
+                      Created at: {""}
+                      {(() => {
+                        const date = new Date(link.createdAt._seconds * 1000);
+                        console.log(date);
+                        return format(date, "MMMM dd, yyyy");
+                      })()}
                     </p>
                     {/* <p>Click Count: {getClickCount(link.shortUrl)}</p> */}
                   </div>
-                  <button onClick={() => copyToClipBoard(link.shortUrl)} className="rounded p-2 lg:self-start border ">Copy
+                  <button
+                    onClick={() => copyToClipBoard(link.shortUrl)}
+                    className="rounded p-2 lg:self-start border ">
+                    Copy
                   </button>
                 </li>
               ))}

@@ -15,7 +15,7 @@ import Link from "next/link";
 import { AuthContext } from "@/context/AuthContext";
 import { User } from "firebase/auth";
 import useDownloader from 'react-use-downloader';
-import Loading from "../loading";
+import LoadingSpinner from "../LoadingSpinner";
 
 const QRCodes = () => {
   const appUser = useContext(AuthContext);
@@ -58,11 +58,11 @@ const QRCodes = () => {
     
   };
 
-  const [link, setLink] = useState("");
-  const [title, setTitle] = useState("");
+  const [link, setLink] = useState<string>("");
+  const [title, setTitle] = useState<string>("");
   const [qrCodeImage, setQrCodeImage] = useState<string | null>(null);
   const [downloadLink, setDownloadLink] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [files, setFiles] = useState<File[]>([]);
 
   interface File {
@@ -171,7 +171,7 @@ if (!appUser) {
             disabled={loading}
             className="p-3 bg-[#005AE2] rounded-lg mt-2 text-white flex">
             Create
-            {loading ? <Loading /> : null}
+            {loading ? <LoadingSpinner /> : null}
           </button>
           <p className="mt-2 text-[0.7rem]">
             By clicking Create, I agree with the terms of service, privacy

@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation';
 
 
 const Sidebar: React.FC<{ isOpen: boolean; closeSidebar: () => void }> = ({ isOpen, closeSidebar }) => {
-  const [active, setActive] = useState(false)
+  const [active, setActive] = useState<boolean>(false)
   const pathName = usePathname()
 
   const handleClick = () => {
