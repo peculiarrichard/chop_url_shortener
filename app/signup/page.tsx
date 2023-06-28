@@ -19,6 +19,7 @@ import {
 } from "react-icons/bs";
 import Link from "next/link";
 import { toast } from "react-toastify";
+import Nav from "@/components/Nav";
 
 const Register: React.FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -84,6 +85,7 @@ const Register: React.FC = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Nav></Nav>
       <div className="flex flex-col w-[90%] m-auto justify-center items-center my-10">
         <p className="text-base mb-4">Sign up with:</p>
             <button onClick={handleGoogleLogin} className="text-white flex items-center mb-10 hover:scale-110 bg-blue-600 px-4 py-2 rounded-lg">

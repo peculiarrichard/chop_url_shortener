@@ -5,6 +5,7 @@ import {sendPasswordResetEmail} from "firebase/auth";
 import { AuthContext } from "@/context/AuthContext";
 import { toast } from "react-toastify";
 import Head  from "next/head";
+import Nav from "@/components/Nav";
 
 
 const ResetPassword: React.FC = () => {
@@ -32,6 +33,7 @@ const handlePasswordRest = async (e: React.FormEvent) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Nav></Nav>
       <div className="flex flex-col w-[90%] m-auto justify-center items-center my-10">
         <p className="text-base mb-4">Enter your details to reset your password:</p>
         <form onSubmit={handlePasswordRest} className="flex flex-col w-full md:w-1/2 mx-auto">

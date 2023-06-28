@@ -18,6 +18,7 @@ import {
 } from "react-icons/bs";
 import Link from "next/link";
 import { toast } from "react-toastify";
+import Nav from "@/components/Nav";
 
 const Login : React.FC = () => {
   const { currentUser } = useContext(AuthContext);
@@ -81,6 +82,7 @@ const Login : React.FC = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Nav></Nav>
       <div className="flex flex-col w-[90%] m-auto justify-center items-center my-10">
         <p className="text-base mb-4">Sign In with:</p>
           
