@@ -81,28 +81,29 @@ const Login : React.FC = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="flex flex-col md:flex-row w-4/5 m-auto justify-between my-10">
-        <div className="flex flex-col md:w-2/5">
-          <div className="flex items-center justify-evenly mb-10">
-            <button onClick={handleGoogleLogin}>
+      <div className="flex flex-col w-[90%] m-auto justify-center items-center my-10">
+        <p className="text-base mb-4">Sign In with:</p>
+          
+            <button onClick={handleGoogleLogin} className="text-white flex items-center mb-10 hover:scale-110 bg-blue-600 px-4 py-2 rounded-lg">
               <BsGoogle
                 size={45}
                 color="red"
                 className="shadow-lg p-2 rounded-lg hover:scale-110"></BsGoogle>
+                Google
             </button>
-          </div>
+          
           <div className="flex items-center py-4">
-            <div className="flex-grow h-px bg-gray"></div>
-            <span className="flex-shrink text-lg text-gray px-4 italic font-light">
+            <div className="flex-grow h-px bg-blue-600"></div>
+            <span className="flex-shrink text-lg text-blue-600 px-4 italic font-light">
               or
             </span>
-            <div className="flex-grow h-px bg-gray"></div>
+            <div className="flex-grow h-px bg-blue-600"></div>
           </div>
-          <form onSubmit={handleLogin} className="flex flex-col w-full">
+          <form onSubmit={handleLogin} className="flex flex-col w-full md:w-1/2 mx-auto">
             <label htmlFor="email" className="font-hairline">
               Email Address: <br></br>
               <input
-                className="w-full shadow-lg h-10 mt-2 text-center text-black rounded-lg mb-6"
+                className="w-full shadow-lg h-10 mt-2 text-center text-black rounded-lg mb-6 border border-blue-600"
                 name="email"
                 type="email"
                 id="email"
@@ -115,7 +116,7 @@ const Login : React.FC = () => {
               <label htmlFor="password" className="font-hairline">
                 Password: <br></br>
                 <input
-                  className="w-full shadow-lg h-10 mt-2 text-center text-black rounded-lg mb-6"
+                  className="w-full shadow-lg h-10 mt-2 text-center text-black rounded-lg mb-6 border border-blue-600"
                   name="password"
                   type={passwordShown ? "text" : "password"}
                   id="password"
@@ -143,7 +144,7 @@ const Login : React.FC = () => {
             </label>
             <button
               type="submit"
-              className="bg-blue2 text-white p-2 rounded-lg hover:border-green hover:shadow-3xl hover:scale-105 duration-300">
+              className="bg-blue-600 text-white p-2 rounded-lg hover:border-green hover:shadow-3xl hover:scale-105 duration-300 ">
               Login
             </button>
           </form>
@@ -153,7 +154,7 @@ const Login : React.FC = () => {
             <span>
               <Link
                 href='/resetpassword'
-                className="text-blue2 font-hairline underline">
+                className="text-blue2 font-bold text-blue-600 underline">
                 Reset Your Password
               </Link>
             </span>
@@ -164,13 +165,12 @@ const Login : React.FC = () => {
             <span>
               <Link
                 href="/signup"
-                className="text-blue2 font-hairline underline">
+                className="text-blue2 font-bold text-blue-600 underline">
                 Sign Up
               </Link>
             </span>
           </p>
         </div>
-      </div>
     </>
   );
 };
