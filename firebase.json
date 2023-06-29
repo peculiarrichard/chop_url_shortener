@@ -15,7 +15,7 @@
     }
   ],
   "hosting": {
-    "public": "out",
+    "public": "build",
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -25,10 +25,6 @@
       {
         "source": "**",
         "function": "app"
-      },
-      {
-        "source": "/:domain/:path*",
-        "function": "route"
       }
     ]
   }

@@ -1,4 +1,3 @@
-
 import admin = require("firebase-admin");
 import functions = require("firebase-functions");
 admin.initializeApp();
@@ -63,14 +62,14 @@ export const trackClick = functions.https.onRequest(
 
 //function to get users short links with auto generated slug
 export const getUserLinks = functions.https.onRequest(async (req, res) => {
-  res.set('Access-Control-Allow-Origin', '*');
+  res.set("Access-Control-Allow-Origin", "*");
   const { userId } = req.query as { userId: string };
 
   try {
     const snapshot = await admin
       .firestore()
-      .collection('shortUrls')
-      .where('user', '==', userId)
+      .collection("shortUrls")
+      .where("user", "==", userId)
       .get();
 
     const links: any[] = [];
@@ -81,31 +80,32 @@ export const getUserLinks = functions.https.onRequest(async (req, res) => {
 
     res.json({ links });
   } catch (error) {
-    res.status(500).json({ error: 'An error occurred' });
+    res.status(500).json({ error: "An error occurred" });
   }
 });
 
 // function to get users custom links with back half
-export const getCustomUserLinks = functions.https.onRequest(async (req, res) => {
-  res.set('Access-Control-Allow-Origin', '*');
-  const { userId } = req.query as { userId: string };
+export const getCustomUserLinks = functions.https.onRequest(
+  async (req, res) => {
+    res.set("Access-Control-Allow-Origin", "*");
+    const { userId } = req.query as { userId: string };
 
-  try {
-    const snapshot = await admin
-      .firestore()
-      .collection('customShortUrls')
-      .where('user', '==', userId)
-      .get();
+    try {
+      const snapshot = await admin
+        .firestore()
+        .collection("customShortUrls")
+        .where("user", "==", userId)
+        .get();
 
-    const links: any[] = [];
-    snapshot.forEach((doc) => {
-      const link = doc.data();
-      links.push(link);
-    });
+      const links: any[] = [];
+      snapshot.forEach((doc) => {
+        const link = doc.data();
+        links.push(link);
+      });
 
-    res.json({ links });
-  } catch (error) {
-    res.status(500).json({ error: 'An error occurred' });
+      res.json({ links });
+    } catch (error) {
+      res.status(500).json({ error: "An error occurred" });
+    }
   }
-});
-
+);

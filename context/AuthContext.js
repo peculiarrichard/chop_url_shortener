@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import React from "react";
 import { useEffect, useState } from "react";
@@ -23,7 +23,11 @@ export const AuthProvider = ({ children }) => {
     return unsubscribe;
   }, []);
   if (loading) {
-    return <p className="m-auto w-4/5 text-lg">Hey there, relax! Your app will load in a bit...</p>;
+    return (
+      <p className="m-auto w-4/5 text-lg">
+        Hey there, relax! Your app will load in a bit...
+      </p>
+    );
   }
 
   const value = { currentUser };

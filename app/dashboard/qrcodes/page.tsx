@@ -3,38 +3,31 @@
 import React, { useContext, useEffect } from "react";
 import { storage, auth } from "@/firebase/config.js";
 import QRCode from "qrcode";
-import {
-  ref,
-  uploadBytes,
-  getDownloadURL,
-  listAll,
-} from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL, listAll } from "firebase/storage";
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { AuthContext } from "@/context/AuthContext";
 import { User } from "firebase/auth";
-import useDownloader from 'react-use-downloader';
+import useDownloader from "react-use-downloader";
 import LoadingSpinner from "../LoadingSpinner";
 
 const QRCodes = () => {
   const appUser = useContext(AuthContext);
-  const {download} = useDownloader();
+  const { download } = useDownloader();
   let user: User | null = auth.currentUser;
   const listRef = ref(storage, `${user?.uid}/`);
-  
 
   const userId = user ? user.uid : "unknown";
   const generateQrCode = async (
     data: string,
     title: string
   ): Promise<string> => {
-
-    if(!data){
-      throw new Error('Invalid link or no link found')
+    if (!data) {
+      throw new Error("Invalid link or no link found");
     }
-    if(!title){
-      throw new Error('Code Title is required')
+    if (!title) {
+      throw new Error("Code Title is required");
     }
     try {
       // Generate QR code as a data URL
@@ -55,7 +48,6 @@ const QRCodes = () => {
       console.error("Error generating QR code:", error);
       throw error;
     }
-    
   };
 
   const [link, setLink] = useState<string>("");
@@ -79,12 +71,12 @@ const QRCodes = () => {
       setTitle(title);
       setLoading(false);
     } catch (error) {
-      setLoading(false)
+      setLoading(false);
       console.error("Error generating QR code:", error);
       throw error;
     }
-    setLink('');
-    setTitle('');
+    setLink("");
+    setTitle("");
   };
 
   //fetch qrcodes
@@ -112,7 +104,7 @@ const QRCodes = () => {
     }
   }, [listRef]);
 
-if (!appUser) {
+  if (!appUser) {
     return (
       <p className="w-4/5 m-auto text-base text-center mt-20">
         You are not authorized to view this page. Please{" "}
@@ -121,7 +113,7 @@ if (!appUser) {
   }
   return (
     <>
-    <section className="w-full lg:ml-[15rem] box-border p-4 text-[#2e4457]">
+      <section className="w-full lg:ml-[15rem] box-border p-4 text-[#2e4457]">
         <div className="flex flex-col lg:flex-row justify-between border-b py-4">
           <div className="flex flex-col lg:flex-row lg:gap-4 justify-center lg:items-center">
             <h1 className="text-xl font-extrabold ">QR codes:</h1>
@@ -129,7 +121,9 @@ if (!appUser) {
               Create and download QR codes for your links
             </p>
           </div>
-          <Link href='/dashboard/feedback' className="flex gap-2 items-center p-2 border-2 rounded-lg text-[0.8rem] font-semibold hover:bg-[#2e4457] hover:text-white hover:border-none mt-4 lg:mt-0">
+          <Link
+            href="/dashboard/feedback"
+            className="flex gap-2 items-center p-2 border-2 rounded-lg text-[0.8rem] font-semibold hover:bg-[#2e4457] hover:text-white hover:border-none mt-4 lg:mt-0">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -179,7 +173,6 @@ if (!appUser) {
           </p>
         </form>
 
-
         {qrCodeImage && (
           <>
             <Image
@@ -196,35 +189,45 @@ if (!appUser) {
           </a>
         )}
 
-
-      <div className="mt-6">
-        <h1 className="text-lg font-bold">Your Files</h1>
-        {files.length === 0 ? (
-          <p>You are yet to create any QR Codes</p>
-        ) : (
-          <ul className="">
-            {files.map((file) => (
-              <li key={file.name} className="justify-between items-center mt-3 flex flex-col lg:flex-row border-2 shadow-lg p-3 rounded">
-                <div className="flex flex-col space-y-2 lg:items-start">
-                  <p className="text-xl font-bold text-center">{file.name}</p>
-                <Image
-                  src={file.downloadUrl}
-                  alt="qrcode"
-                  width={150}
-                  height={150}></Image>
-                
-                </div>
-                <div className="flex gap-4">
-                <Link href={file.downloadUrl} target="_blank" download className="p-2 bg-slate-200 rounded-lg font-semibold hover:bg-[#2e4457] hover:text-white">
-                  View
-                </Link>
-                <button onClick={()=>download(file.downloadUrl, `${file.name}.png`)} className="border p-2 rounded hover:bg-slate-100">Download</button>
-                </div>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
+        <div className="mt-6">
+          <h1 className="text-lg font-bold">Your Files</h1>
+          {files.length === 0 ? (
+            <p>You are yet to create any QR Codes</p>
+          ) : (
+            <ul className="">
+              {files.map((file) => (
+                <li
+                  key={file.name}
+                  className="justify-between items-center mt-3 flex flex-col lg:flex-row border-2 shadow-lg p-3 rounded">
+                  <div className="flex flex-col space-y-2 lg:items-start">
+                    <p className="text-xl font-bold text-center">{file.name}</p>
+                    <Image
+                      src={file.downloadUrl}
+                      alt="qrcode"
+                      width={150}
+                      height={150}></Image>
+                  </div>
+                  <div className="flex gap-4">
+                    <Link
+                      href={file.downloadUrl}
+                      target="_blank"
+                      download
+                      className="p-2 bg-slate-200 rounded-lg font-semibold hover:bg-[#2e4457] hover:text-white">
+                      View
+                    </Link>
+                    <button
+                      onClick={() =>
+                        download(file.downloadUrl, `${file.name}.png`)
+                      }
+                      className="border p-2 rounded hover:bg-slate-100">
+                      Download
+                    </button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       </section>
     </>
   );
