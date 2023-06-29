@@ -163,7 +163,7 @@ const Login : React.FC = () => {
           </p>
           <p className="mt-10 text-center">
             {" "}
-            Don't have an account?{" "}
+            No account yet?{" "}
             <span>
               <Link
                 href="/signup"

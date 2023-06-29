@@ -76,7 +76,7 @@ const Feedback = () => {
       <section className="w-full ml-[15rem] box-border p-4 text-[#2e4457]">
         <div className="flex flex-col  p-2 sm:mb-4">
           <h3 className=" text-lg font-bold">
-            We value your feedback! Let us know if there's an issue you
+            We value your feedback! Let us know if there is an issue you
             encountered or you have Ideas on what we can improve on.
           </h3>
         </div>
