@@ -45,7 +45,7 @@ const ShortLinks = () => {
 
       await setDoc(docRef, {
         longUrl,
-        shortUrl: `chop.ly/${slug}`,
+        shortUrl: `https://chop-1256b.web.app/${slug}`,
         createdAt: Timestamp.now(),
         id: slug,
         user: user?.uid,
@@ -76,7 +76,7 @@ const ShortLinks = () => {
       }
     };
     fetchUserLinks();
-  }, [links]);
+  }, [links, user?.uid]);
 
   const [originalUrl, setOriginalUrl] = useState<string>("");
   const [shortenedUrl, setShortenedUrl] = useState<string>("");

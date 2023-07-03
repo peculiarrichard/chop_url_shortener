@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { User, signOut } from "firebase/auth";
 import { BsChevronDown } from "react-icons/bs";
-import profilephoto from "@/assests/profilephoto.png";
+import profilephoto from "/public/assests/profilephoto.png";
 import Link from "next/link";
 
 const Headerbar: React.FC<{ toggleSidebar: () => void; isOpen: boolean }> = ({

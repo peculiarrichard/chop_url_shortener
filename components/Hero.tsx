@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import Image from "next/image";
-import dashboard from "@/assests/dashboard.png";
+import dashboard from "/public/assests/dashboard.png";
 
 const Hero = () => {
   return (

@@ -5,7 +5,7 @@ import Image from "next/image";
 import { AuthContext } from "@/context/AuthContext";
 import { User } from "firebase/auth";
 import { auth } from "@/firebase/config.js";
-import dashboard from "@/assests/dashboard.png";
+import dashboard from "/public/assests/dashboard.png";
 import Head from "next/head";
 const Dashboard = () => {
   const appUser = useContext(AuthContext);

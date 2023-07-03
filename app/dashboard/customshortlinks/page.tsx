@@ -53,7 +53,7 @@ const CustomShortLinks = () => {
       }
       await setDoc(customDocRef, {
         longUrl,
-        shortUrl: `chop.ly/${slug}`,
+        shortUrl: `https://chop-1256b.web.app/${slug}`,
         createdAt: Timestamp.now(),
         id: slug,
         user: user?.uid,
@@ -62,7 +62,7 @@ const CustomShortLinks = () => {
     } catch (error) {
       console.log(error);
     }
-    return slug;
+    return shortUrl;
   };
 
   const [url, setUrl] = useState<string>("");
@@ -106,7 +106,7 @@ const CustomShortLinks = () => {
       }
     };
     fetchCustomUserLinks();
-  }, [links]);
+  }, [links, user?.uid]);
 
   const copyToClipBoard = async (text: string) => {
     try {

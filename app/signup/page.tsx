@@ -11,41 +11,47 @@ import {
   sendEmailVerification,
 } from "firebase/auth";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 import { BsEye, BsGoogle, BsEyeSlash } from "react-icons/bs";
 import Link from "next/link";
-import { toast } from "react-toastify";
 import Nav from "@/components/Nav";
+import LoadingButton from "@/components/LoadingButton";
 
 const Register: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [passwordShown, setPasswordShown] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
 
   const handleRegister = async (event: React.FormEvent) => {
     event.preventDefault();
+    setLoading(true);
     try {
       let userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
         password
       );
-      toast.success("account created successfully");
+      alert("account created successfully");
       await updateProfile(userCredential.user, {
         displayName: name,
       });
       await sendEmailVerification(userCredential.user);
-      toast.success("verification email sent");
+      alert("verification email sent");
       return router.push("signin");
     } catch (error: any) {
+      setLoading(false);
       const { code, message } = error;
       if (code === "auth/email-already-in-use") {
-        toast.error("Your email address is already in use");
+        alert("Your email address is already in use");
       }
       console.error(code, message);
     }
+    setLoading(false);
+    setName("");
+    setEmail("");
+    setPassword("");
   };
 
   const handleGoogleLogin = async () => {
@@ -64,7 +70,7 @@ const Register: React.FC = () => {
     } catch (error: any) {
       const { code, message, email, credential } = error;
       console.error(code, message, email, credential);
-      toast.error("signin failed");
+      alert("signin failed");
     }
   };
 
@@ -149,6 +155,7 @@ const Register: React.FC = () => {
             type="submit"
             className="bg-blue-600 text-white p-2 rounded-lg hover:border-green hover:shadow-3xl hover:scale-105 duration-300 ">
             Sign Up
+            {loading ? <LoadingButton /> : null}
           </button>
         </form>
         <p className="mt-10 text-center">

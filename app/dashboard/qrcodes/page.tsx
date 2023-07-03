@@ -102,7 +102,7 @@ const QRCodes = () => {
     if (user) {
       fetchUserFiles();
     }
-  }, [listRef]);
+  }, [listRef, user]);
 
   if (!appUser) {
     return (

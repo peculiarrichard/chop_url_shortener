@@ -17,8 +17,8 @@ import {
   BsEyeSlash,
 } from "react-icons/bs";
 import Link from "next/link";
-import { toast } from "react-toastify";
 import Nav from "@/components/Nav";
+import LoadingButton from "@/components/LoadingButton";
 
 const Login : React.FC = () => {
   const { currentUser } = useContext(AuthContext);
@@ -26,26 +26,30 @@ const Login : React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [passwordShown, setPasswordShown] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
 
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
+    setLoading(true);
     try {
       await signInWithEmailAndPassword(auth, email, password);
       return router.push("/dashboard");
     } catch (error:any) {
       const { code, message } = error;
       if (code === "auth/user-not-found") {
-        toast.error("You are not a registered user");
+        alert("You are not a registered user");
       }
       if (code === "auth/wrong-password") {
-        toast.error("Wrong password!");
+        alert("Wrong password!");
       }
       console.error(code, message);
+      setLoading(false);
     }
     if (currentUser) {
       return router.push("/dashboard");
     }
+    setLoading(false);
     setEmail("");
     setPassword("");
   };
@@ -65,7 +69,7 @@ const Login : React.FC = () => {
     } catch (error: any) {
       const { code, message, email, credential } = error;
       console.error(code, message, email, credential);
-      toast.error("signin failed");
+      alert("signin failed");
     }
   };
 
@@ -146,8 +150,9 @@ const Login : React.FC = () => {
             </label>
             <button
               type="submit"
-              className="bg-blue-600 text-white p-2 rounded-lg hover:border-green hover:shadow-3xl hover:scale-105 duration-300 ">
-              Login
+              className="bg-blue-600 text-white p-2 rounded-lg hover:border-green hover:shadow-3xl hover:scale-105 duration-300 "> 
+            Sign In
+            {loading ? <LoadingButton /> : null}
             </button>
           </form>
           <p className="mt-10 mb-4 text-center">
